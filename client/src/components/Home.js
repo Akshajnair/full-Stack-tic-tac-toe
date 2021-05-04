@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import './assets/Home.css'
-
+import { Link } from "react-router-dom";
 export class Home extends Component {
-    onclick()
-    {
-
-    }
+  onclick() {}
   render() {
     return (
       <div>
@@ -22,12 +18,13 @@ export class Home extends Component {
                     <p class="u-text u-text-custom-color-2 u-text-2">
                       Play with friend and train machine
                     </p>
-                    <a
-                      href="#"
-                      class="u-border-2 u-border-custom-color-2 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-2 u-none u-radius-50 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1"
-                    >
-                      PLAY
-                    </a>
+                    <Link to="/game">
+                      <a
+                        class="u-border-2 u-border-custom-color-2 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-2 u-none u-radius-50 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1"
+                      >
+                        PLAY
+                      </a>
+                    </Link>
                   </div>
                 </div>
                 <div class="u-container-style u-custom-color-2 u-layout-cell u-right-cell u-size-30 u-size-xs-60 u-layout-cell-2">
@@ -38,12 +35,13 @@ export class Home extends Component {
                     <p class="u-align-center u-text u-text-custom-color-1 u-text-4">
                       Machine play with you
                     </p>
-                    <a
-                      href="#"
-                      class="u-border-2 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-1 u-none u-radius-50 u-text-custom-color-1 u-text-hover-custom-color-2 u-btn-2"
-                    >
-                      PLAY
-                    </a>
+                    <Link to="/game">
+                      <a
+                        class="u-border-2 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-1 u-none u-radius-50 u-text-custom-color-1 u-text-hover-custom-color-2 u-btn-2"
+                      >
+                        PLAY
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
