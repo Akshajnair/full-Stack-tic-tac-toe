@@ -8,41 +8,69 @@ export class Game extends Component {
     super(props);
     this.state = {
       arr: [
-        { place: 1, data: 0 },
-        { place: 2, data: 0 },
-        { place: 3, data: 0 },
-        { place: 4, data: 0 },
-        { place: 5, data: 0 },
-        { place: 6, data: 0 },
-        { place: 7, data: 0 },
-        { place: 8, data: 0 },
-        { place: 9, data: 0 },
+        { place: 1, data: 0 ,turn:0},
+        { place: 2, data: 0 ,turn:0},
+        { place: 3, data: 0 ,turn:0},
+        { place: 4, data: 0 ,turn:0},
+        { place: 5, data: 0 ,turn:0},
+        { place: 6, data: 0 ,turn:0},
+        { place: 7, data: 0 ,turn:0},
+        { place: 8, data: 0 ,turn:0},
+        { place: 9, data: 0 ,turn:0},
       ],
       turn: 0,
     };
     this.userinput = this.userinput.bind(this);
     this.reset = this.reset.bind(this);
+    this.ifwon = this.ifwon.bind(this);
   }
-  async userinput(place) {
-    if (this.state.arr[place].data === 0) {
-      let arr = [...this.state.arr];
-      let move = { ...arr[place] };
-      if (this.state.turn % 2 === 0) move.data = 1;
-      else move.data = 2;
-      arr[place] = move;
-      this.setState({ arr });
-      this.setState({ turn: this.state.turn + 1 });
-    }
-    console.log(place);
-    this.ifwon();
+  userinput(place) {
+    var promise = new Promise((resolve) => {
+      if (this.state.arr[place].data === 0) {
+        let arr = [...this.state.arr];
+        let move = { ...arr[place] };
+        if (this.state.turn % 2 === 0) move.data = 1;
+        else move.data = 2;
+        move.turn=this.state.turn+1;
+        arr[place] = move;
+        this.setState({ arr });
+        this.setState({ turn: this.state.turn + 1 });
+      }
+      console.log(place + " " + this.state.turn);
+      resolve(1);
+    });
+    promise.then((bool) => this.ifwon());
   }
-  async ifwon() {
-    await this.userinput();
-    console.log(this.state.turn);
+  async ifwon(place) {
     let this1 = this.state.arr;
-    if (this.state.turn >= 4) {
-      if (this1[0].data === this1[1].data && this1[1].data === this1[2].data) {
-        console.log("yolo");
+    if (this.state.turn >= 5) {
+      if (
+        (this1[0].data === this1[1].data &&
+          this1[1].data === this1[2].data &&
+          this1[0].data !== 0) ||
+        (this1[3].data === this1[4].data &&
+          this1[4].data === this1[5].data &&
+          this1[3].data !== 0) ||
+        (this1[6].data === this1[7].data &&
+          this1[7].data === this1[8].data &&
+          this1[6].data !== 0) ||
+        (this1[0].data === this1[3].data &&
+          this1[3].data === this1[6].data &&
+          this1[0].data !== 0) ||
+        (this1[1].data === this1[4].data &&
+          this1[4].data === this1[7].data &&
+          this1[1].data !== 0) ||
+        (this1[2].data === this1[5].data &&
+          this1[5].data === this1[8].data &&
+          this1[2].data !== 0) ||
+        (this1[0].data === this1[4].data &&
+          this1[4].data === this1[8].data &&
+          this1[0].data !== 0) ||
+        (this1[2].data === this1[4].data &&
+          this1[4].data === this1[6].data &&
+          this1[2].data !== 0)
+      ) {
+        console.log(this1);
       }
     }
   }
