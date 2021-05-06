@@ -3,10 +3,10 @@ import circle from "./assets/img/circle.svg";
 import cross from "./assets/img/cross.svg";
 import transparent from "./assets/img/transparent.svg";
 export class Square extends Component {
-    constructor (props) {
-        super(props)
-        this.onclick = this.onclick.bind(this)
-    }
+  constructor(props) {
+    super(props);
+    this.onclick = this.onclick.bind(this);
+  }
   callimg() {
     if (this.props.arr[this.props.key1].data === 1) return circle;
     else if (this.props.arr[this.props.key1].data === 2) return cross;
@@ -20,7 +20,7 @@ export class Square extends Component {
       <div
         className={
           "u-effect-fade u-gallery-item u-gallery-item-" +
-          this.props.arr[this.props.key]
+          this.props.arr[this.props.key1]
         }
         data-image-width="1280"
         data-image-height="720"
@@ -36,8 +36,10 @@ export class Square extends Component {
             alt=""
           />
         </div>
-        <div className={"u-over-slide u-shading u-over-slide-" + this.props.num} onClick={this.onclick}>
-        </div>
+        <div
+          className={"u-over-slide u-shading u-over-slide-" + this.props.num}
+          onClick={this.onclick}
+        ></div>
       </div>
     );
   }

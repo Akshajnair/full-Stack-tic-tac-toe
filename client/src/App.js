@@ -4,10 +4,6 @@ import Home from './components/Home'
 import './components/assets/Home.css'
 import { Game } from './components/Game'
 class App extends Component {
-  constructor (props) {
-    super(props)
-
-  }
 
   render () {
     return (
