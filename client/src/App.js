@@ -17,7 +17,7 @@ class App extends Component {
           />
           <Route
             exact
-            path='/game'
+            path='/game/:id'
             render={props => {return <Game  />
             }}
           />

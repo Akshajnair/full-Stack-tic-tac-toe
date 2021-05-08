@@ -19,33 +19,48 @@ export class Game extends Component {
         { place: 8, data: 0, turn: 0 },
         { place: 9, data: 0, turn: 0 },
       ],
-      turn: 0,
+      play: 0,
       result: 0,
+      type: "twoplayer",
     };
     this.userinput = this.userinput.bind(this);
     this.reset = this.reset.bind(this);
     this.ifwon = this.ifwon.bind(this);
+    this.onstart();
   }
+  onstart() {
+    const code = window.location.pathname.split("/")[2];
+    this.setState({ type: code });
+  }
+
   userinput(place) {
     var promise = new Promise((resolve) => {
       if (this.state.arr[place].data === 0 && this.state.result === 0) {
         let arr = [...this.state.arr];
         let move = { ...arr[place] };
-        if (this.state.turn % 2 === 0) move.data = 1;
+        if (this.state.play % 2 === 0) move.data = 1;
         else move.data = 2;
-        move.turn = this.state.turn + 1;
+        move.turn = this.state.play + 1;
         arr[place] = move;
         this.setState({ arr });
-        this.setState({ turn: this.state.turn + 1 });
+        this.setState({ play: this.state.play + 1 });
       }
       resolve(1);
     });
     promise.then((bool) => this.ifwon());
   }
+  playnextmove() {
+    let data = this.state;
+    if (this.state.type === "singleplayer") {
+      Dbcon.nextmove(data, function (res) {
+        console.log(res);
+      });
+    }
+  }
   async ifwon(place) {
     let this1 = this.state.arr;
     let result = { a: 0, b: 0, c: 0, mark: 0 };
-    if (this.state.turn >= 5) {
+    if (this.state.play >= 5) {
       if (
         this1[0].data === this1[1].data &&
         this1[1].data === this1[2].data &&
@@ -75,7 +90,7 @@ export class Game extends Component {
         this1[4].data === this1[7].data &&
         this1[1].data !== 0
       )
-        result = { a: 1, b: 4, c: 4, mark: this1[1].data };
+        result = { a: 1, b: 4, c: 7, mark: this1[1].data };
       if (
         this1[2].data === this1[5].data &&
         this1[5].data === this1[8].data &&
@@ -100,20 +115,18 @@ export class Game extends Component {
   }
   winnerdeclare(result) {
     let data = this.state;
-    Dbcon.transdata(data, function (res) {
-      console.log(res);
-    });
+    if (this.state.type === "twoplayer") Dbcon.transdata(data);
     this.setState({ result: result.mark });
     let arr = [
-      { place: 1, data: 0 },
-      { place: 2, data: 0 },
-      { place: 3, data: 0 },
-      { place: 4, data: 0 },
-      { place: 5, data: 0 },
-      { place: 6, data: 0 },
-      { place: 7, data: 0 },
-      { place: 8, data: 0 },
-      { place: 9, data: 0 },
+      { place: 1, data: 0, turn: 0 },
+      { place: 2, data: 0, turn: 0 },
+      { place: 3, data: 0, turn: 0 },
+      { place: 4, data: 0, turn: 0 },
+      { place: 5, data: 0, turn: 0 },
+      { place: 6, data: 0, turn: 0 },
+      { place: 7, data: 0, turn: 0 },
+      { place: 8, data: 0, turn: 0 },
+      { place: 9, data: 0, turn: 0 },
     ];
     arr[result.a].data = result.mark;
     arr[result.b].data = result.mark;
@@ -122,17 +135,17 @@ export class Game extends Component {
   }
   reset() {
     let arr = [
-      { place: 1, data: 0 },
-      { place: 2, data: 0 },
-      { place: 3, data: 0 },
-      { place: 4, data: 0 },
-      { place: 5, data: 0 },
-      { place: 6, data: 0 },
-      { place: 7, data: 0 },
-      { place: 8, data: 0 },
-      { place: 9, data: 0 },
+      { place: 1, data: 0, turn: 0 },
+      { place: 2, data: 0, turn: 0 },
+      { place: 3, data: 0, turn: 0 },
+      { place: 4, data: 0, turn: 0 },
+      { place: 5, data: 0, turn: 0 },
+      { place: 6, data: 0, turn: 0 },
+      { place: 7, data: 0, turn: 0 },
+      { place: 8, data: 0, turn: 0 },
+      { place: 9, data: 0, turn: 0 },
     ];
-    this.setState({ arr, turn: 0, result: 0 });
+    this.setState({ arr, play: 0, result: 0 });
   }
   squaredisp() {
     return this.state.arr.map((slide, index) => {

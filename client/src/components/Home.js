@@ -16,7 +16,7 @@ export class Home extends Component {
                       Play with friend and train machine
                     </p>
                     <Link
-                      to="/game"
+                      to="/game/twoplayer" 
                       className="u-border-2 u-border-custom-color-2 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-2 u-none u-radius-50 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1"
                     >
                       PLAY
@@ -32,8 +32,7 @@ export class Home extends Component {
                       Machine play with you
                     </p>
                     <Link
-                      to="/game"
-                      href=""
+                      to="/game/singleplayer"
                       className="u-border-2 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-1 u-none u-radius-50 u-text-custom-color-1 u-text-hover-custom-color-2 u-btn-2"
                     >
                       PLAY
