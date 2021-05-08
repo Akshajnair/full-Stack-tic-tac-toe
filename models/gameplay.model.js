@@ -1,22 +1,20 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const gameplaySchema = new Schema({
   arr: [
     {
-      place: { type: String, trim: true },
-      data: { type: String, trim: true },
-      turn: { type: String, trim: true },
+      place: { type: Number, trim: true },
+      data: { type: Number, trim: true },
     },
   ],
   play: {
-    type: String,
+    type: Number,
     required: false,
     trim: true,
   },
   result: {
-    type: String,
+    type: Number,
     required: false,
     trim: true,
   },

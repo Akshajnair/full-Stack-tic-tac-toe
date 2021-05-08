@@ -1,15 +1,16 @@
 import { Component } from "react";
-import axios from 'axios'
+import axios from "axios";
 
 export class Dbcon extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      baseurl: 'http://localhost:5000'
+      baseurl: "http://localhost:5000",
       // baseurl: window.location.origin
-    }
+    };
   }
   transdata(data) {
+    console.log(data);
     const options = {
       url: this.state.baseurl + "/gameplay/add",
       method: "POST",
@@ -18,9 +19,9 @@ export class Dbcon extends Component {
         "Content-Type": "application/json;charset=UTF-8",
       },
       data: {
-        arr:data.arr,
+        arr: data.gameplay,
         play: data.play,
-        result: data.result
+        result: data.result,
       },
     };
     axios(options)
@@ -31,24 +32,26 @@ export class Dbcon extends Component {
         console.log(error);
       });
   }
-  nextmove(data,callback)
-  {
+  nextmove(data, callback) {
+    console.log(data);
     const options = {
       url: this.state.baseurl + "/gameplay/next",
-      method: "GET",
+      method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
       },
       data: {
-        arr:data.arr,
+        arr: data.gameplay,
         play: data.play,
-        result: data.result
       },
     };
     axios(options)
       .then((res) => {
-        console.log(res);
+        if (res.data === "no play") console.log("no play");
+        else {
+          callback(res.data);
+        }
       })
       .catch((error) => {
         console.log(error);

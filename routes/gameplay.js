@@ -21,15 +21,15 @@ router.route("/add").post((req, res) => {
     "arr.6.data": arr[6].data,
     "arr.7.data": arr[7].data,
     "arr.8.data": arr[8].data,
-    "arr.0.turn": arr[0].turn,
-    "arr.1.turn": arr[1].turn,
-    "arr.2.turn": arr[2].turn,
-    "arr.3.turn": arr[3].turn,
-    "arr.4.turn": arr[4].turn,
-    "arr.5.turn": arr[5].turn,
-    "arr.6.turn": arr[6].turn,
-    "arr.7.turn": arr[7].turn,
-    "arr.8.turn": arr[8].turn,
+    "arr.0.place": arr[0].place,
+    "arr.1.place": arr[1].place,
+    "arr.2.place": arr[2].place,
+    "arr.3.place": arr[3].place,
+    "arr.4.place": arr[4].place,
+    "arr.5.place": arr[5].place,
+    "arr.6.place": arr[6].place,
+    "arr.7.place": arr[7].place,
+    "arr.8.place": arr[8].place,
     play: play,
     result: result,
   }).then((gameplay) => {
@@ -47,22 +47,59 @@ router.route("/add").post((req, res) => {
     }
   });
 });
-function check(arr) {
-  return arr.turn === 1;
-}
-router.route("/next").get((req, res) => {
+
+router.route("/next").post((req, res) => {
   const arr = req.body.arr;
   const play = req.body.play;
-  if (play === "1") {
-    arr.find(check).then((gameplay) => {
-      res.json(gameplay);
+  if (play === 1) {
+    Gameplay.findOne({
+      "arr.0.data": arr[0].data,
+      "arr.0.place": arr[0].place,
+      result: 2 || 0,
+    }).then((gameplay) => {
+      if (gameplay) res.json(gameplay.arr[1].place);
+      else res.json("no play");
     });
-  } else res.json("yolo");
-
-  // Gameplay.findOne({ "arr.0.data": arr[0].data, "arr.0.play": arr[0].play })
-  //   .then((gameplays) => {
-  //   })
-  //   .catch((err) => res.json({ res: "wrong" }));
+  } else if (play === 3) {
+    Gameplay.findOne({
+      "arr.0.data": arr[0].data,
+      "arr.2.data": arr[2].data,
+      "arr.0.place": arr[0].place,
+      "arr.2.place": arr[2].place,
+      result: 2 || 0,
+    }).then((gameplay) => {
+      if (gameplay) res.json(gameplay.arr[3].place);
+      else res.json("no play");
+    });
+  } else if (play === 5) {
+    Gameplay.findOne({
+      "arr.0.data": arr[0].data,
+      "arr.2.data": arr[2].data,
+      "arr.4.data": arr[4].data,
+      "arr.0.place": arr[0].place,
+      "arr.2.place": arr[2].place,
+      "arr.4.place": arr[4].place,
+      result: 2 || 0,
+    }).then((gameplay) => {
+      if (gameplay) res.json(gameplay.arr[5].place);
+      else res.json("no play");
+    });
+  } else if (play === 7) {
+    Gameplay.findOne({
+      "arr.0.data": arr[0].data,
+      "arr.2.data": arr[2].data,
+      "arr.4.data": arr[4].data,
+      "arr.6.data": arr[6].data,
+      "arr.0.place": arr[0].place,
+      "arr.2.place": arr[2].place,
+      "arr.4.place": arr[4].place,
+      "arr.6.place": arr[6].place,
+      result: 2 || 0,
+    }).then((gameplay) => {
+      if (gameplay) res.json(gameplay.arr[7].place);
+      else res.json("no play");
+    });
+  }
 });
 
 router.route("/").delete((req, res) => {

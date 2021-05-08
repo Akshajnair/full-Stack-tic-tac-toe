@@ -19,46 +19,78 @@ export class Game extends Component {
         { place: 8, data: 0, turn: 0 },
         { place: 9, data: 0, turn: 0 },
       ],
+      gameplay: [
+        { place: 0, data: 0 },
+        { place: 0, data: 0 },
+        { place: 0, data: 0 },
+        { place: 0, data: 0 },
+        { place: 0, data: 0 },
+        { place: 0, data: 0 },
+        { place: 0, data: 0 },
+        { place: 0, data: 0 },
+        { place: 0, data: 0 },
+      ],
       play: 0,
       result: 0,
-      type: "twoplayer",
     };
     this.userinput = this.userinput.bind(this);
     this.reset = this.reset.bind(this);
     this.ifwon = this.ifwon.bind(this);
-    this.onstart();
   }
-  onstart() {
-    const code = window.location.pathname.split("/")[2];
-    this.setState({ type: code });
+  componentDidMount() {
+    this.reset();
   }
-
   userinput(place) {
     var promise = new Promise((resolve) => {
       if (this.state.arr[place].data === 0 && this.state.result === 0) {
         let arr = [...this.state.arr];
+        let gameplay = [...this.state.gameplay];
         let move = { ...arr[place] };
         if (this.state.play % 2 === 0) move.data = 1;
         else move.data = 2;
+        let play = { ...gameplay[this.state.play] };
         move.turn = this.state.play + 1;
         arr[place] = move;
-        this.setState({ arr });
+        play.place = place + 1;
+        play.data = move.data;
+        gameplay[this.state.play] = play;
+        this.setState({ arr, gameplay });
         this.setState({ play: this.state.play + 1 });
       }
       resolve(1);
     });
     promise.then((bool) => this.ifwon());
   }
-  playnextmove() {
+  async playnextmove() {
+    let this1 = this;
+    let allow = 0;
+    const code = window.location.pathname.split("/")[2];
     let data = this.state;
-    if (this.state.type === "singleplayer") {
+    if (code === "singleplayer") {
       Dbcon.nextmove(data, function (res) {
-        console.log(res);
+        let arr = [...this1.state.arr];
+        let gameplay = [...this1.state.gameplay];
+        let move = { ...arr[res - 1] };
+        let play = { ...gameplay[this1.state.play] };
+        move.data = 2;
+        move.turn = this1.state.play + 1;
+        arr[res - 1] = move;
+        play.place = res;
+        play.data = move.data;
+        gameplay[this1.state.play] = play;
+        allow = 1;
+        if (allow) {
+          this1.setState({ arr, gameplay });
+          this1.setState({ play: this1.state.play + 1 });
+        }
+
+        this1.ifwon();
       });
     }
   }
   async ifwon(place) {
     let this1 = this.state.arr;
+    this.playnextmove();
     let result = { a: 0, b: 0, c: 0, mark: 0 };
     if (this.state.play >= 5) {
       if (
@@ -109,14 +141,18 @@ export class Game extends Component {
         this1[2].data !== 0
       )
         result = { a: 2, b: 4, c: 6, mark: this1[2].data };
-
+      this.setState({ result: result.mark });
       if (result.mark !== 0) this.winnerdeclare(result);
+      if (this.state.play >= "9" && this.state.type === "twoplayer") {
+        let data = this.state;
+        Dbcon.transdata(data);
+      }
     }
   }
   winnerdeclare(result) {
     let data = this.state;
-    if (this.state.type === "twoplayer") Dbcon.transdata(data);
-    this.setState({ result: result.mark });
+    const code = window.location.pathname.split("/")[2];
+    if (code === "twoplayer") Dbcon.transdata(data);
     let arr = [
       { place: 1, data: 0, turn: 0 },
       { place: 2, data: 0, turn: 0 },
@@ -145,7 +181,18 @@ export class Game extends Component {
       { place: 8, data: 0, turn: 0 },
       { place: 9, data: 0, turn: 0 },
     ];
-    this.setState({ arr, play: 0, result: 0 });
+    let gameplay = [
+      { place: 0, data: 0 },
+      { place: 0, data: 0 },
+      { place: 0, data: 0 },
+      { place: 0, data: 0 },
+      { place: 0, data: 0 },
+      { place: 0, data: 0 },
+      { place: 0, data: 0 },
+      { place: 0, data: 0 },
+      { place: 0, data: 0 },
+    ];
+    this.setState({ arr, gameplay, play: 0, result: 0 });
   }
   squaredisp() {
     return this.state.arr.map((slide, index) => {
