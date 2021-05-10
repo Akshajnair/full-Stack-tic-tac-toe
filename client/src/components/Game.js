@@ -52,7 +52,6 @@ export class Game extends Component {
         move.turn = this.state.play + 1;
         arr[place] = move;
         play.place = place + 1;
-        play.data = move.data;
         gameplay[this.state.play] = play;
         this.setState({ arr, gameplay });
         this.setState({ play: this.state.play + 1 });
