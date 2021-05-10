@@ -6,21 +6,22 @@ router.route("/").get((req, res) => {
     .then((gameplay) => res.json(gameplay))
     .catch((err) => res.status(400).json("Error: " + err));
 });
+router.route("/last").get((req, res) => {
+  Gameplay.find()
+    .then((gameplay) => {
+      let obj={}
+      obj.len=gameplay.length
+      obj.lastarr=gameplay[obj.len-1].arr
+      res.json(obj)
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
 
 router.route("/add").post((req, res) => {
   const arr = req.body.arr;
   const play = req.body.play;
   const result = req.body.result;
   Gameplay.find({
-    "arr.0.data": arr[0].data,
-    "arr.1.data": arr[1].data,
-    "arr.2.data": arr[2].data,
-    "arr.3.data": arr[3].data,
-    "arr.4.data": arr[4].data,
-    "arr.5.data": arr[5].data,
-    "arr.6.data": arr[6].data,
-    "arr.7.data": arr[7].data,
-    "arr.8.data": arr[8].data,
     "arr.0.place": arr[0].place,
     "arr.1.place": arr[1].place,
     "arr.2.place": arr[2].place,
@@ -53,7 +54,6 @@ router.route("/next").post((req, res) => {
   const play = req.body.play;
   if (play === 1) {
     Gameplay.findOne({
-      "arr.0.data": arr[0].data,
       "arr.0.place": arr[0].place,
       result: 2 || 0,
     }).then((gameplay) => {
@@ -62,8 +62,6 @@ router.route("/next").post((req, res) => {
     });
   } else if (play === 3) {
     Gameplay.findOne({
-      "arr.0.data": arr[0].data,
-      "arr.2.data": arr[2].data,
       "arr.0.place": arr[0].place,
       "arr.2.place": arr[2].place,
       result: 2 || 0,
@@ -73,9 +71,6 @@ router.route("/next").post((req, res) => {
     });
   } else if (play === 5) {
     Gameplay.findOne({
-      "arr.0.data": arr[0].data,
-      "arr.2.data": arr[2].data,
-      "arr.4.data": arr[4].data,
       "arr.0.place": arr[0].place,
       "arr.2.place": arr[2].place,
       "arr.4.place": arr[4].place,
@@ -86,10 +81,6 @@ router.route("/next").post((req, res) => {
     });
   } else if (play === 7) {
     Gameplay.findOne({
-      "arr.0.data": arr[0].data,
-      "arr.2.data": arr[2].data,
-      "arr.4.data": arr[4].data,
-      "arr.6.data": arr[6].data,
       "arr.0.place": arr[0].place,
       "arr.2.place": arr[2].place,
       "arr.4.place": arr[4].place,
