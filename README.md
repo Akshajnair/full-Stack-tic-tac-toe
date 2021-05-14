@@ -6,6 +6,14 @@
 Live version is available at https://fullstacktictactoe.herokuapp.com feel free to fill up my database and train it cause till now i havent :p
 
 
+## ScreenShots
+### Home page
+![Cover Page](https://raw.githubusercontent.com/Akshajnair/full-Stack-tic-tac-toe/main/Screenshots/home.png)
+
+### Game page
+![Wish](https://raw.githubusercontent.com/Akshajnair/full-Stack-tic-tac-toe/main/Screenshots/game.png)
+
+
 ### Installing
 
 If you are installing production version on Heroku or any other platform Just add key in settings 
