@@ -1,4 +1,4 @@
-# full Stack tik-tak-toe
+# full Stack tic-tac-toe
  Use full stack to store the moves and learn tic tac toe
 
 ## Getting Started
