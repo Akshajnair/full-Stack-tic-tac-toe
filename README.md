@@ -41,8 +41,8 @@ npm build
 
 ## Authors
 
-* **Akshaj Nair** - *Initial work and Backend* - [akshajnair](https://github.com/Akshajnair)
-* **Deepti Adhikari** - *Desiging & interface* - [adhikari-deepti](https://github.com/adhikari-deepti)
+* **Akshaj Nair** - *React and Backend* - [akshajnair](https://github.com/Akshajnair)
+* **Deepti Adhikari** - *Client-side Design* - [adhikari-deepti](https://github.com/adhikari-deepti)
 
 ## License
 
