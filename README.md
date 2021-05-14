@@ -1,4 +1,4 @@
-# full Stack tik-tak-toe
+# full Stack tic-tac-toe
  Use full stack to store the moves and learn tic tac toe
 
 ## Getting Started
@@ -41,7 +41,8 @@ npm build
 
 ## Authors
 
-* **Akshaj Nair** - *Initial work* - [akshajnair](https://github.com/Akshajnair)
+* **Akshaj Nair** - *React and Backend* - [akshajnair](https://github.com/Akshajnair)
+* **Deepti Adhikari** - *Client-side Design* - [adhikari-deepti](https://github.com/adhikari-deepti)
 
 ## License
 
